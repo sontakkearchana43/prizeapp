@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Prizes app</title>
+    <style>
+        .row{
+           margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- <main> -->
+        <div class="row">
+            <div class="col-12">
+                <h1>Prizes App</h1>
+                <div class="form-inline" novalidate>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="inputPassword2" class="sr-only">Name</label>
+                        <input type="text" class="form-control" id="nameId" placeholder="Name">
+                      </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                      <label for="inputPassword2" class="sr-only">Year</label>
+                      <input type="text" class="form-control" id="yearId" placeholder="Year">
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <select id="categoryId" class="form-control">
+                            <option value="">Select Category</option>
+                            <option value="physics">Physics</option>
+                            <option value="peace">Peace</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="medicine">Medicine</option>
+                            <option value="economics">Economics</option>
+                        </select>
+                      </div>
+                    <button type="submit" class="btn btn-primary mb-2" id="searchId">Search</button>
+                </div>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Laureates</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% prizes.forEach(function(ct) { %>
+                            <tr>
+                                <td><%= ct.category %></td>
+                                <td><%= ct.year %></td>
+                                <td><b><%= ct.winners %></b></td>
+                              </tr>
+                              <tr>
+                          <% }); %>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+        <script>
+            const searchElement = document.getElementById("searchId");
+            searchElement.addEventListener("click",() => {
+                const nameVal = document.getElementById("nameId").value;
+                const yearVal = document.getElementById("yearId").value;
+                const categoryVal = document.getElementById("categoryId").value;
+                let queryString = "";
+                if(nameVal){
+                    queryString = queryString + (!queryString ? `name=${nameVal}` : `&name=${nameVal}`)
+                }
+                if(yearVal){
+                    queryString = queryString +  (!queryString ? `year=${yearVal}` : `&year=${yearVal}`)
+                }
+                if(categoryVal){
+                    queryString = queryString + (!queryString ? `category=${categoryVal}` : `&category=${categoryVal}`)
+                }
+                if(queryString){
+                    window.location.href = `${window.location.origin}/prizes?${queryString}`
+                }else{
+                    window.location.href = `${window.location.origin}/prizes`
+                }
+            })
+        </script>
+</body>
+</html>
